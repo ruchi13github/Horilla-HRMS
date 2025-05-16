@@ -41,7 +41,8 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+ALLOWED_HOSTS = ['horilla-hrms-o9wl.onrender.com']
+
 
 # Application definition
 
@@ -113,11 +114,17 @@ WSGI_APPLICATION = "horilla.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+import dj_database_url 
 
 if env("DATABASE_URL", default=None):
     DATABASES = {
-        "default": env.db(),
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default=env("DATABASE_URL", default=None),
+        conn_max_age=600
+    )
     }
+
 else:
     DATABASES = {
         "default": {
